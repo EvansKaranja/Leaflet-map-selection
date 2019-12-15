@@ -88,8 +88,8 @@
       const population = document.getElementById("pop");
 
       L.tileLayer(
-        // "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
-        "http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+        "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
+        // "http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
 
         {
           attribution:
@@ -102,8 +102,13 @@
       ).addTo(mymap);
       const el = `<div><p>County</p><input type="text" name="county" id="county" value="" /></div><div><p>Population</p><input type="text" name="population" id="pop" value="34122" /></div></div>`;
       function highlight(layer) {
-        population.value = layer.feature.properties.total_pop2019;
-        county.value = layer.feature.properties.Name;
+        if (layer) {
+          population.value = layer.feature.properties.total_pop2019;
+          county.value = layer.feature.properties.Name;
+        } else {
+          population.value = "";
+          county.value = "";
+        }
       }
 
       function onEachFeature(feature, layer) {
@@ -126,10 +131,10 @@
         L.geoJSON(xhr.response, {
           onEachFeature: onEachFeature,
           style: {
-            color: "#fff",
+            // color: "#fff",
             fillColor: "0",
             fillOpacity: 0,
-            weight: 1,
+            weight: 5,
             opacity: 0.9
           }
         }).addTo(mymap);
